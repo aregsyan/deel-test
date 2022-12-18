@@ -1,15 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const { createHttpTerminator } = require('http-terminator');
 const db = require('./core/db');
 const { contractRouter } = require('./contracts/routes');
 const { jobRouter } = require('./jobs/routes');
 const { adminRouter } = require('./admin/routes');
-
-
-/**
- * FIX ME!
- * @returns contract by id
- */
+const config = require('./core/config');
 
 
 class App {
@@ -19,14 +15,27 @@ class App {
         this.initRoutes();
     }
 
-    async start(port) {
+    async start(port, sequelize) {
+        db.sequelize.connect(sequelize || config.sequelize);
         await db.dbModels.initialize();
         const sequelizeDb = await db.sequelize.getDb();
         this.app.set('models', db.dbModels.models);
         this.app.set('sequelize', sequelizeDb);
-        this.app.listen(port, () => {
-            console.log('Express App Listening on Port 3001');
+        this.server = this.app.listen(port || config.http.port, () => {
+            console.log(`Express App Listening on Port ${port || config.http.port}`);
         });
+        this.httpTerminator = createHttpTerminator({
+            server: this.server,
+        });
+    }
+
+    async close() {
+        try {
+            await db.sequelize.close();
+            await this.httpTerminator.terminate();
+        } catch(e) {
+            console.log(`Error in closing app: ${e}`)
+        }
     }
 
     initRoutes() {

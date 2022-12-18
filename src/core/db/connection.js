@@ -3,11 +3,15 @@ const Sequelize = require("sequelize");
 class SequelizeDb {
     constructor() {}
 
-    connect() {
+    connect(config) {
         this.sequelize = new Sequelize({
-            dialect: 'sqlite',
-            storage: './database.sqlite3'
+            dialect: config.dialect,
+            storage: config.storage,
         });
+    }
+
+    async close() {
+        return this.sequelize.close();
     }
 
     async getDb() {

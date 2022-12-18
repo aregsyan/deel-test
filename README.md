@@ -4,6 +4,31 @@
 
 💫 Welcome! 🎉
 
+## Work has been
+1. Structured app with DDD
+2. Implemented endpoints
+3. The /balances/deposit/:userId requirements are unclear: 
+   1. Where should we store the deposit?
+   2. Will client use deposit for each contractor or not?
+   3. Can we do changes in Models?
+   4. How should be divided deposit between contractors
+2. Used transactions for updating db
+3. Added integration tests with jest
+4. Added postman collection for api endpoints
+
+## What could be done else
+1. Basic technical enhancements:
+   1. Adding logging. I prefer bounyan
+   2. Adding proper configs. I prefer convict
+   3. Adding enum like values and constants. 
+   3. Adding error handling with middlewares. Dividing errors to Http errors
+   4. Changing structure of App avoid using config and db config as parameter
+   5. Containerizing the application with docker
+6. Adding db configs. Db syncronizations and db locking based on query.
+5. Performance testing.
+6. Unit tests for services
+7. Query parser for the db queries to have generic implementations
+
 
 This backend exercise involves building a Node.js/Express.js app that will serve a REST API. We imagine you should spend around 3 hours at implement this feature.
 

@@ -6,8 +6,8 @@
 
 ## Work has been
 1. Structured app with DDD
-2. Implemented endpoints
-3. The /balances/deposit/:userId requirements are unclear: 
+2. Implemented endpoints besides `/balances/deposit/:userId`.
+3. The `/balances/deposit/:userId` requirements are unclear: 
    1. Where should we store the deposit?
    2. Will client use deposit for each contractor or not?
    3. Can we do changes in Models?
@@ -18,8 +18,8 @@
 
 ## What could be done else
 1. Basic technical enhancements:
-   1. Adding logging. I prefer bounyan
-   2. Adding proper configs. I prefer convict
+   1. Adding logging. I prefer `bounyan`
+   2. Adding proper configs. I prefer `convict`
    3. Adding enum like values and constants. 
    3. Adding error handling with middlewares. Dividing errors to Http errors
    4. Changing structure of App avoid using config and db config as parameter

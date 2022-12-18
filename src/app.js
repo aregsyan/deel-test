@@ -1,21 +1,43 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const {sequelize} = require('./model')
-const {getProfile} = require('./middleware/getProfile')
-const app = express();
-app.use(bodyParser.json());
-app.set('sequelize', sequelize)
-app.set('models', sequelize.models)
+const db = require('./core/db');
+const { contractRouter } = require('./contracts/routes');
+const { jobRouter } = require('./jobs/routes');
+const { adminRouter } = require('./admin/routes');
+
 
 /**
  * FIX ME!
  * @returns contract by id
  */
-app.get('/contracts/:id',getProfile ,async (req, res) =>{
-    const {Contract} = req.app.get('models')
-    const {id} = req.params
-    const contract = await Contract.findOne({where: {id}})
-    if(!contract) return res.status(404).end()
-    res.json(contract)
-})
-module.exports = app;
+
+
+class App {
+    constructor() {
+        this.app = express();
+        this.initMiddlewares();
+        this.initRoutes();
+    }
+
+    async start(port) {
+        await db.dbModels.initialize();
+        const sequelizeDb = await db.sequelize.getDb();
+        this.app.set('models', db.dbModels.models);
+        this.app.set('sequelize', sequelizeDb);
+        this.app.listen(port, () => {
+            console.log('Express App Listening on Port 3001');
+        });
+    }
+
+    initRoutes() {
+        this.app.use('/contracts', contractRouter);
+        this.app.use('/jobs', jobRouter);
+        this.app.use('/admin', adminRouter);
+    }
+
+    initMiddlewares() {
+        this.app.use(bodyParser.json());
+    }
+}
+
+module.exports = App;

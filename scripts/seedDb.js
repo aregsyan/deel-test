@@ -1,9 +1,11 @@
-const { Profile, Contract, Job } = require('../src/model');
+const { dbModels } = require('../src/core/db');
 
 /* WARNING THIS WILL DROP THE CURRENT DATABASE */
 seed();
 
 async function seed() {
+    await dbModels.initialize();
+    const { Profile, Contract, Job } = dbModels.models;
   // create tables
   await Profile.sync({ force: true });
   await Contract.sync({ force: true });
@@ -225,6 +227,6 @@ async function seed() {
       paymentDate:'2020-08-14T23:11:26.737Z',
       ContractId: 3,
     }),
-    
+
   ]);
 }

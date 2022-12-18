@@ -4,6 +4,8 @@
 
 💫 Welcome! 🎉
 
+This backend exercise involves building a Node.js/Express.js app that will serve a REST API. We imagine you should spend around 3 hours at implement this feature.
+
 ## Work has been
 1. Structured app with DDD
 2. Implemented endpoints besides `/balances/deposit/:userId`.
@@ -30,7 +32,7 @@
 7. Query parser for the db queries to have generic implementations
 
 
-This backend exercise involves building a Node.js/Express.js app that will serve a REST API. We imagine you should spend around 3 hours at implement this feature.
+
 
 ## Data Models
 
